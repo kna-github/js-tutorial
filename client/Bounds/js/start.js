@@ -17,6 +17,7 @@ var ballSpeed = 300;
 // Called after preload
 function create() {
     game.add.tileSprite(0, 0, 480, 640, 'background');
+    game.physics.startSystem(Phaser.Physics.ARCADE)
 
     playerBet = createBet(game.world.centerX, 600);
     computerBet = createBet(game.world.centerX, 20);
@@ -39,19 +40,21 @@ function update() {
 
 function createBet(x, y) {
     var bet = game.add.sprite(x, y, 'bet');
+    game.physics.enable(bet, Phaser.Physics.ARCADE)
     bet.anchor.setTo(0.5, 0.5);
-    //bet.body.collideWorldBounds = true;
-    //bet.body.bounce.setTo(1, 1);
-    //bet.body.immovable = true;
+    bet.body.collideWorldBounds = true;
+    bet.body.bounce.setTo(1, 1);
+    bet.body.immovable = true;
 
     return bet;
 }
 
 function createBall(){
     var ball = game.add.sprite(game.world.centerX, game.world.centerY, 'ball');
+    game.physics.enable(ball, Phaser.Physics.ARCADE)
     ball.anchor.setTo(0.5, 0.5);
-    //ball.body.collideWorldBounds = true;
-    //ball.body.bounce.setTo(1, 1);
+    ball.body.collideWorldBounds = true;
+    ball.body.bounce.setTo(1, 1);
 
     return ball;
 }
