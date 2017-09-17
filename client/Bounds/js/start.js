@@ -9,7 +9,7 @@ var playerBet;
 var computerBet;
 var ball;
 
-var computerBetSpeed = 300;
+var computerBetSpeed = 200;
 var ballSpeed = 300;
 
 
@@ -56,6 +56,8 @@ function update() {
   game.physics.arcade.collide(ball, playerBet, ballHitsBet, null, this);
   game.physics.arcade.collide(ball, computerBet, ballHitsBet, null, this);
 
+  //Проверяем, не забил ли кто-то гол
+  checkGoal();
 }
 
 
@@ -91,7 +93,7 @@ function releaseBall() {
 }
 
 function ballHitsBet (_ball, _bet) {
-  /*var diff = 0;
+  var diff = 0;
 
   if (_ball.x < _bet.x) {
     //  Шарик находится с левой стороны ракетки
@@ -102,10 +104,27 @@ function ballHitsBet (_ball, _bet) {
     //  Шарик находится с правой стороны ракетки
     diff = _ball.x -_bet.x;
     _ball.body.velocity.x = (10 * diff);
-  }
-  else {
-    //  Шарик попал в центр ракетки, добавляем немножко трагической случайности его движению
+  }  else {
+     // Шарик попал в центр ракетки, добавляем немножко трагической случайности его движению
     _ball.body.velocity.x = 2 + Math.random() * 8;
-  }*/
-  
+  }
+
+}
+
+function checkGoal() {
+    if (ball.y < 15) {
+        setBall();
+    } else if (ball.y > 625) {
+        setBall();
+    }
+}
+
+function setBall() {
+    if (ballReleased) {
+        ball.x = game.world.centerX;
+        ball.y = game.world.centerY;
+        ball.body.velocity.x = 0;
+        ball.body.velocity.y = 0;
+        ballReleased = false;
+    }
 }
